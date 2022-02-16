@@ -7,7 +7,7 @@ import numpy as np
 from tqdm import tqdm
 from torch import optim
 import torch.nn as nn
-from model import uNet16,uNet19
+from model import uNet19
 import distutils.dir_util
 from dataset import hist_dataset
 from torch.utils.data import DataLoader

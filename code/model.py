@@ -118,39 +118,6 @@ class OutConv(nn.Module):
     def forward(self, x):
         return self.conv(x)
 
-class uNet16(nn.Module):
-    
-    def __init__(self, n_classes, pretrained=True):    
-        super(uNet16, self).__init__()
-        self.n_channels = 3
-        self.n_classes = n_classes
-
-        self.pool = nn.MaxPool2d(2, 2)
-        self.relu = nn.ReLU(inplace=True)
-        self.encoder = models.vgg16_bn(pretrained=pretrained).features
-        self.enblock1 = nn.Sequential(self.encoder[0], self.encoder[1], self.relu, self.encoder[3], self.encoder[4], self.relu)
-        self.enblock2 = nn.Sequential(self.pool, self.encoder[7], self.encoder[8], self.relu, self.encoder[10], self.encoder[11], self.relu)
-        self.enblock3 = nn.Sequential(self.pool, self.encoder[14], self.encoder[15], self.relu, self.encoder[17], self.encoder[18], self.relu, self.encoder[20], self.encoder[21], self.relu)
-        self.enblock4 = nn.Sequential(self.pool, self.encoder[24], self.encoder[25], self.relu, self.encoder[27], self.encoder[28], self.relu, self.encoder[30], self.encoder[31], self.relu)
-        self.center = nn.Sequential(self.pool, self.encoder[34], self.encoder[35], self.relu, self.encoder[37], self.encoder[38], self.relu, self.encoder[40], self.encoder[41], self.relu)
-        self.deblock1 = TripleUp(512,512,1024)
-        self.deblock2 = TripleUp(512,256)
-        self.deblock3 = DoubleUp(256,128)
-        self.deblock4 = DoubleUp(128,64)
-        self.outc = OutConv(64, n_classes)
-
-    def forward(self, x):
-        x1 = self.enblock1(x)
-        x2 = self.enblock2(x1)
-        x3 = self.enblock3(x2)
-        x4 = self.enblock4(x3)
-        x5 = self.center(x4)
-        x = self.deblock1(x5, x4)
-        x = self.deblock2(x, x3)
-        x = self.deblock3(x, x2)
-        x = self.deblock4(x, x1)
-        logits = self.outc(x)
-        return logits
 
 class uNet19(nn.Module):
     
