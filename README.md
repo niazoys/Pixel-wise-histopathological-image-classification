@@ -30,10 +30,11 @@
 Command to run:
 ```
 python train.py -o 'you_output_path' -e 100 -b 10 -l 0.0001 -n 'vgg19' -is 256 
-or
-- Just run the file from IDE by setting the default values of the input argument.
+
 ```
- 
+ or
+- Just run the file from IDE by setting the default values of the input argument.
+
  ## Prediction with the Network 
  
  - Use the **inference.py** python script to run inference.
@@ -49,5 +50,6 @@ or
 Command to run:
 ```
 python inference.py -b 10  -n  'vgg19'  -f  './../your_path_of_model_weight/weight.pth'
-- Just run the file from IDE by setting the default values of the input argument.
+
 ```
+- Just run the file from IDE by setting the default values of the input argument.
