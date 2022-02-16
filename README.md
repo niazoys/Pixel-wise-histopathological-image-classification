@@ -28,7 +28,7 @@
   
 
 Command to run:
-```
+```python 
 python train.py -o 'you_output_path' -e 100 -b 10 -l 0.0001 -n 'vgg19' -is 256 
 
 ```
@@ -48,7 +48,7 @@ python train.py -o 'you_output_path' -e 100 -b 10 -l 0.0001 -n 'vgg19' -is 256
     - load : path of model weight to load
 
 Command to run:
-```
+```python 
 python inference.py -b 10  -n  'vgg19'  -f  './../your_path_of_model_weight/weight.pth'
 
 ```
