@@ -10,13 +10,13 @@ from torch.utils.data import DataLoader
 import segmentation_models_pytorch as smp
 from dataset import hist_dataset_test,hist_dataset
 
-def train(net,output,device,batch):
+def train(net,output,device,batch,input_shape):
  
     test_dataset = hist_dataset_test("C:/Users/Niazo/OneDrive/Desktop/PhDTask.v1/PhDTask/new_data/testdata/")
     
-    val_dataset = hist_dataset("C:/Users/Niazo/OneDrive/Desktop/PhDTask.v1/PhDTask/new_data/validationdata/",training=False,shape=256) 
+    val_dataset = hist_dataset("C:/Users/Niazo/OneDrive/Desktop/PhDTask.v1/PhDTask/new_data/validationdata/",training=False,shape=input_shape) 
 
-    ex_test_dataset = hist_dataset("C:/Users/Niazo/OneDrive/Desktop/PhDTask.v1/PhDTask/new_data/external_test/",training=False,shape=256) 
+    ex_test_dataset = hist_dataset("C:/Users/Niazo/OneDrive/Desktop/PhDTask.v1/PhDTask/new_data/external_test/",training=False,shape=input_shape) 
 
     test_loader = DataLoader(test_dataset, batch_size=batch, shuffle=False)
     
@@ -59,6 +59,8 @@ def get_args():
     parser.add_argument('-b', '--batch', type=int, default=5, dest='batch')
     
     parser.add_argument('-n', '--network', type=str, default='resnet34', dest='net')
+
+    parser.add_argument('-is', '--in_shape', type=int, default=256, dest='in_shape')
     
     parser.add_argument('-f', '--load', type=str, default='C:/Users/Niazo/OneDrive/Desktop/PhDTask.v1/PhDTask/results/unet_resnet34_ce_dice/', dest='load')  
         
@@ -93,5 +95,5 @@ if __name__ == '__main__':
 
     net.to(device=device)
             
-    train(net = net,output = output,device = device,batch = args.batch)
+    train(net = net,output = output,device = device,batch = args.batch,input_shape=args.in_shape)
         
